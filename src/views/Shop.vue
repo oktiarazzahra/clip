@@ -13,7 +13,17 @@
         </div>
 
         <div class="flex space-x-4">
-          <button class="text-gray-700 hover:text-pink-600 text-xl transition">♡</button>
+          <router-link 
+            to="/wishlist" 
+            class="text-gray-700 hover:text-pink-600 text-xl relative transition"
+          >
+            ♡
+            <span 
+              class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold"
+            >
+              3
+            </span>
+          </router-link>
           <button class="text-gray-700 hover:text-pink-600 text-xl relative transition">
             🛒
             <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">2</span>
