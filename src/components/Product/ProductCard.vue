@@ -1,7 +1,16 @@
 <template>
-  <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition group cursor-pointer">
+  <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition group relative">
+    <!-- Remove Button  -->
+    <button 
+      v-if="showRemove"
+      @click="handleRemove"
+      class="absolute top-2 right-2 z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md hover:bg-red-50 transition"
+    >
+      <span class="text-red-500 text-xl">🗑️</span>
+    </button>
+
     <!-- Image -->
-    <div class="bg-gray-200 h-48 overflow-hidden flex items-center justify-center">
+    <div class="bg-gray-200 h-48 overflow-hidden flex items-center justify-center cursor-pointer" @click="handleClick">
       <img 
         :src="product.image" 
         :alt="product.name"
@@ -12,18 +21,54 @@
     <!-- Info -->
     <div class="p-4">
       <h4 class="font-bold text-gray-900 mb-2 text-sm">{{ product.name }}</h4>
-      <p class="text-pink-600 font-bold text-lg">Rp. {{ formatPrice(product.price) }}</p>
+      <p class="text-pink-600 font-bold text-lg mb-3">Rp. {{ formatPrice(product.price) }}</p>
+      
+      <!-- Contact Us Button (Always show for cart) -->
+      <button 
+        v-if="showRemove"
+        @click="handleContactUs"
+        class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition flex items-center justify-center gap-2 text-sm font-medium"
+      >
+        <span>💬</span>
+        <span>Hubungi Kami</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   product: {
     type: Object,
     required: true
+  },
+  showRemove: {
+    type: Boolean,
+    default: false
+  },
+  showAddToCart: {
+    type: Boolean,
+    default: false
   }
 })
+
+const emit = defineEmits(['remove', 'add-to-cart', 'click', 'contact-us'])
+
+const handleRemove = () => {
+  emit('remove', props.product.id)
+}
+
+const handleAddToCart = () => {
+  emit('add-to-cart', props.product)
+}
+
+const handleContactUs = () => {
+  emit('contact-us', props.product)
+}
+
+const handleClick = () => {
+  emit('click', props.product)
+}
 
 const formatPrice = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')

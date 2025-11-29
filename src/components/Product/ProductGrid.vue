@@ -5,6 +5,7 @@
         v-for="product in filteredProducts"
         :key="product.id"
         :product="product"
+        @click="goToProductDetail"
       />
     </div>
 
@@ -16,7 +17,10 @@
 
 <script setup>
 import { defineProps, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import ProductCard from './ProductCard.vue'
+
+const router = useRouter()
 
 const props = defineProps({
   category: {
@@ -42,4 +46,8 @@ const filteredProducts = computed(() => {
   }
   return products.filter(p => p.category === props.category)
 })
+
+const goToProductDetail = (product) => {
+  router.push(`/product/${product.id}`)
+}
 </script>
