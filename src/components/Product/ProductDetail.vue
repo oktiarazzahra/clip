@@ -53,6 +53,20 @@
         </button>
       </div>
     </div>
+
+    <!-- Simple Success Modal -->
+    <div 
+      v-if="showModal" 
+      class="fixed inset-0 z-50 flex items-center justify-center p-4"
+      @click="showModal = false"
+    >
+      <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div class="relative bg-white rounded-lg p-6 max-w-sm w-full text-center shadow-xl">
+        <div class="text-5xl mb-4">✅</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Berhasil!</h3>
+        <p class="text-gray-600">Produk ditambahkan ke keranjang</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,6 +76,7 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const quantity = ref(1)
+const showModal = ref(false)
 
 // Product database - should match ProductGrid.vue
 const products = [
@@ -189,6 +204,12 @@ const addToCart = () => {
   // Emit event to update cart count
   window.dispatchEvent(new Event('wishlist-updated'))
   
-  alert('Product added to cart!')
+  // Show modal
+  showModal.value = true
+  
+  // Auto close after 2 seconds
+  setTimeout(() => {
+    showModal.value = false
+  }, 2000)
 }
 </script>
