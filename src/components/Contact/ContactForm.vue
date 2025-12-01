@@ -1,6 +1,20 @@
 <template>
   <div class="bg-white py-12">
     <h2 class="text-2xl font-bold mb-6">Send Message</h2>
+    
+    <!-- Selected Product Info -->
+    <div 
+      v-if="productInfo"
+      class="bg-pink-50 border-2 border-pink-200 rounded-lg p-4 mb-6 flex items-center gap-4"
+    >
+      <div class="text-3xl">🛍️</div>
+      <div class="flex-1">
+        <p class="text-sm text-gray-600 mb-1">Produk yang dipilih:</p>
+        <p class="font-bold text-gray-900">{{ productInfo.name }}</p>
+        <p class="text-pink-600 font-bold">Rp. {{ formatPrice(productInfo.price) }}</p>
+      </div>
+    </div>
+    
     <form @submit.prevent="handleSubmit" class="space-y-6">
       <div class="grid md:grid-cols-2 gap-6">
         <div>
@@ -91,14 +105,18 @@ const selectedProduct = sessionStorage.getItem('selectedProduct')
 let productInfo = null
 if (selectedProduct) {
   productInfo = JSON.parse(selectedProduct)
-  sessionStorage.removeItem('selectedProduct') // Clear after reading
+  sessionStorage.removeItem('selectedProduct')
+}
+
+const formatPrice = (price) => {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }
 
 const form = ref({
   name: '',
   email: '',
   subject: productInfo ? `Order: ${productInfo.name}` : '',
-  message: productInfo ? `Hello, I'm interested in ${productInfo.name} priced at Rp. ${productInfo.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}. Please provide more information.` : ''
+  message: productInfo ? `Hello, I'm interested in ${productInfo.name} priced at Rp. ${formatPrice(productInfo.price)}. Please provide more information.` : ''
 })
 
 const isSubmitting = ref(false)

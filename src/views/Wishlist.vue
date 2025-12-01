@@ -29,49 +29,54 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import WishlistTitle from '@/components/Wishlist/WishlistTitle.vue'
 import WishlistGrid from '@/components/Wishlist/WishlistGrid.vue'
 
 const router = useRouter()
+const wishlistItems = ref([])
 
-const wishlistItems = ref([
-  { 
-    id: 1, 
-    name: 'Flower Hair Claw', 
-    price: 15000, 
-    image: import.meta.env.BASE_URL + 'images/flower.jpg' 
-  },
-  { 
-    id: 2, 
-    name: 'Blue Bloom Hair Claw', 
-    price: 55000, 
-    image: import.meta.env.BASE_URL + 'images/blue-bloom.jpg' 
-  },
-  { 
-    id: 3, 
-    name: 'Starfish Pearl Hair Claw', 
-    price: 70000, 
-    image: import.meta.env.BASE_URL + 'images/starfish.jpg' 
+// Load wishlist from localStorage
+onMounted(() => {
+  const savedWishlist = localStorage.getItem('wishlist')
+  if (savedWishlist) {
+    wishlistItems.value = JSON.parse(savedWishlist)
   }
-])
+  
+  // Listen for wishlist updates
+  window.addEventListener('wishlist-updated', loadWishlist)
+})
+
+const loadWishlist = () => {
+  const savedWishlist = localStorage.getItem('wishlist')
+  if (savedWishlist) {
+    wishlistItems.value = JSON.parse(savedWishlist)
+  } else {
+    wishlistItems.value = []
+  }
+}
 
 const removeFromWishlist = (productId) => {
   wishlistItems.value = wishlistItems.value.filter(item => item.id !== productId)
+  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value))
+  window.dispatchEvent(new Event('wishlist-updated'))
   console.log('Removed from wishlist:', productId)
 }
 
 const addToCart = (product) => {
   console.log('Navigating to contact for:', product)
+  sessionStorage.setItem('selectedProduct', JSON.stringify(product))
   router.push('/contact')
 }
 
 const handleProductClick = (product) => {
   console.log('Product clicked:', product)
+  router.push(`/product/${product.id}`)
 }
 
 const handleContactUs = (product) => {
+  console.log('Contact us for product:', product)
   sessionStorage.setItem('selectedProduct', JSON.stringify(product))
   router.push('/contact')
 }
