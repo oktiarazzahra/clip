@@ -39,10 +39,7 @@ const wishlistItems = ref([])
 
 // Load wishlist from localStorage
 onMounted(() => {
-  const savedWishlist = localStorage.getItem('wishlist')
-  if (savedWishlist) {
-    wishlistItems.value = JSON.parse(savedWishlist)
-  }
+  loadWishlist()
   
   // Listen for wishlist updates
   window.addEventListener('wishlist-updated', loadWishlist)

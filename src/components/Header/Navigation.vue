@@ -104,7 +104,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -112,8 +112,33 @@ const route = useRoute()
 // Mobile menu state
 const isMenuOpen = ref(false)
 
-// Wishlist counter - nanti bisa pakai state management (Vuex/Pinia)
-const wishlistCount = ref(3)
+// Wishlist counter
+const wishlistCount = ref(0)
+
+// Load wishlist count from localStorage
+const updateWishlistCount = () => {
+  const savedWishlist = localStorage.getItem('wishlist')
+  if (savedWishlist) {
+    const items = JSON.parse(savedWishlist)
+    // Count number of unique items (not total quantity)
+    wishlistCount.value = items.length
+  } else {
+    wishlistCount.value = 0
+  }
+}
+
+// Initial load
+onMounted(() => {
+  updateWishlistCount()
+  
+  // Listen for wishlist updates
+  window.addEventListener('wishlist-updated', updateWishlistCount)
+})
+
+// Also update when route changes (e.g., navigating to wishlist page)
+watch(() => route.path, () => {
+  updateWishlistCount()
+})
 
 const isActive = (path) => {
   return route.path === path
