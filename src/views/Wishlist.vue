@@ -38,19 +38,19 @@ const wishlistItems = ref([
     id: 1, 
     name: 'Flower Hair Claw', 
     price: 15000, 
-    image: '/images/flower.jpg' 
+    image: import.meta.env.BASE_URL + 'images/flower.jpg' 
   },
   { 
     id: 2, 
     name: 'Blue Bloom Hair Claw', 
     price: 55000, 
-    image: '/images/blue-bloom.jpg' 
+    image: import.meta.env.BASE_URL + 'images/blue-bloom.jpg' 
   },
   { 
     id: 3, 
     name: 'Starfish Pearl Hair Claw', 
     price: 70000, 
-    image: '/images/starfish.jpg' 
+    image: import.meta.env.BASE_URL + 'images/starfish.jpg' 
   }
 ])
 
