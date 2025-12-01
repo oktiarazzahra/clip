@@ -62,7 +62,7 @@ const products = [
     name: 'Flower Hair Claw', 
     price: 15000, 
     category: 'cute', 
-    image: '/images/flower.jpg',
+    image: import.meta.env.BASE_URL + 'images/flower.jpg',
     description: 'A charming hair claw with delicate flower patterns. Perfect for adding a cute touch to your everyday look.'
   },
   { 
@@ -70,7 +70,7 @@ const products = [
     name: 'Blue Bloom Hair Claw', 
     price: 55000, 
     category: 'elegant', 
-    image: '/images/blue-bloom.jpg',
+    image: import.meta.env.BASE_URL + 'images/blue-bloom.jpg',
     description: 'A cream-colored hair claw decorated with pastel blue flowers. Made from durable acrylic for a touch of elegance and charm.'
   },
   { 
@@ -78,7 +78,7 @@ const products = [
     name: 'Twisted Pearl Hair Claw', 
     price: 30000, 
     category: 'elegant', 
-    image: '/images/pearl.jpg',
+    image: import.meta.env.BASE_URL + 'images/pearl.jpg',
     description: 'An elegant twisted design adorned with pearl accents. Adds sophistication to any hairstyle.'
   },
   { 
@@ -86,7 +86,7 @@ const products = [
     name: 'Mint Marble Hair Claw', 
     price: 55000, 
     category: 'pretty', 
-    image: '/images/mint.jpg',
+    image: import.meta.env.BASE_URL + 'images/mint.jpg',
     description: 'A refreshing mint-colored marble pattern hair claw. Stylish and perfect for a trendy look.'
   },
   { 
@@ -94,7 +94,7 @@ const products = [
     name: 'Koi Dream Hair Claw', 
     price: 39000, 
     category: 'cute', 
-    image: '/images/koi.jpg',
+    image: import.meta.env.BASE_URL + 'images/koi.jpg',
     description: 'Featuring adorable koi fish design. A unique and playful accessory for your hair.'
   },
   { 
@@ -102,7 +102,7 @@ const products = [
     name: 'Starfish Pearl Hair Claw', 
     price: 70000, 
     category: 'elegant', 
-    image: '/images/starfish.jpg',
+    image: import.meta.env.BASE_URL + 'images/starfish.jpg',
     description: 'A luxurious starfish design with pearl embellishments. Perfect for special occasions.'
   },
   { 
@@ -110,7 +110,7 @@ const products = [
     name: 'Rainbow Twist Hair Claw', 
     price: 59000, 
     category: 'pretty', 
-    image: '/images/rainbow.jpg',
+    image: import.meta.env.BASE_URL + 'images/rainbow.jpg',
     description: 'A vibrant rainbow twisted design that brings color and joy to your hairstyle.'
   },
   { 
@@ -118,7 +118,7 @@ const products = [
     name: 'Shell Glow Hair Claw', 
     price: 35000, 
     category: 'cute', 
-    image: '/images/shell.jpg',
+    image: import.meta.env.BASE_URL + 'images/shell.jpg',
     description: 'A cute shell-shaped hair claw with a subtle glow effect. Perfect for beach vibes.'
   }
 ]

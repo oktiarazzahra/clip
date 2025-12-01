@@ -10,7 +10,7 @@
     </div>
     <div class="flex items-center justify-center px-4">
       <img 
-        src="/images/aboutstory.jpg" 
+        :src="storyImage" 
         alt="ClipChic Story"
         class="rounded-xl object-cover h-44 w-full max-w-xs"
       />
@@ -19,4 +19,7 @@
     </div>
   </div>
 </template>
-<script setup></script>
+
+<script setup>
+const storyImage = import.meta.env.BASE_URL + 'images/aboutstory.jpg'
+</script>
