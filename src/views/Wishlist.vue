@@ -30,8 +30,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import WishlistTitle from '@/components/Wishlist/WishlistTitle.vue'
 import WishlistGrid from '@/components/Wishlist/WishlistGrid.vue'
+
+const router = useRouter()
 
 const wishlistItems = ref([
   { 
@@ -61,8 +64,7 @@ const removeFromWishlist = (productId) => {
 
 const addToCart = (product) => {
   console.log('Navigating to contact for:', product)
-  // Navigate to contact page
-  window.location.href = '/contact'
+  router.push('/contact')
 }
 
 const handleProductClick = (product) => {
@@ -70,9 +72,7 @@ const handleProductClick = (product) => {
 }
 
 const handleContactUs = (product) => {
-  // Store product info in sessionStorage for contact form
   sessionStorage.setItem('selectedProduct', JSON.stringify(product))
-  // Navigate to contact page
-  window.location.href = '/contact'
+  router.push('/contact')
 }
 </script>
