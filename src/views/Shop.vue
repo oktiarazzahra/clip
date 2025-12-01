@@ -5,7 +5,7 @@
   />
 
   <!-- Main Content -->
-  <section class="py-12 px-4">
+  <section class="bg-gray-50 py-12 px-4 min-h-screen">
     <div class="max-w-6xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Sidebar - Categories -->

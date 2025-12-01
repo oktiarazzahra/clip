@@ -1,56 +1,34 @@
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-12">
-    <div class="grid md:grid-cols-2 gap-12">
-      <!-- Product Image -->
-      <div class="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-80">
-        <img 
-          :src="product.image" 
-          :alt="product.name"
-          class="w-full h-full object-cover"
-        />
-      </div>
-
-      <!-- Product Info -->
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
-        <p class="text-3xl font-bold text-pink-600 mb-6">{{ formatPrice(product.price) }}</p>
-        
-        <p class="text-gray-600 mb-8 leading-relaxed">{{ product.description }}</p>
-
-        <!-- Quantity Selector -->
-        <div class="mb-8">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Qty:</label>
-          <div class="flex items-center gap-4">
-            <button 
-              @click="decreaseQuantity"
-              class="w-10 h-10 border border-gray-300 rounded-md hover:bg-gray-100 transition flex items-center justify-center"
-              :disabled="quantity <= 1"
-            >
-              −
-            </button>
-            <input 
-              v-model.number="quantity"
-              type="number"
-              min="1"
-              class="w-16 h-10 text-center border border-gray-300 rounded-md"
+  <div class="bg-gray-50 min-h-screen py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="grid md:grid-cols-2 gap-8 p-8">
+          <!-- Product Image -->
+          <div class="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96">
+            <img 
+              :src="product.image" 
+              :alt="product.name"
+              class="w-full h-full object-cover"
             />
+          </div>
+
+          <!-- Product Info -->
+          <div class="flex flex-col justify-center">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
+            <p class="text-3xl font-bold text-pink-600 mb-6">{{ formatPrice(product.price) }}</p>
+            
+            <p class="text-gray-600 mb-8 leading-relaxed">{{ product.description }}</p>
+
+            <!-- Add to Cart Button -->
             <button 
-              @click="increaseQuantity"
-              class="w-10 h-10 border border-gray-300 rounded-md hover:bg-gray-100 transition flex items-center justify-center"
+              @click="addToCart"
+              class="w-full bg-pink-500 text-white py-3 rounded-md hover:bg-pink-600 transition font-medium flex items-center justify-center gap-2"
             >
-              +
+              <span>🛒</span>
+              Add to Cart
             </button>
           </div>
         </div>
-
-        <!-- Add to Cart Button -->
-        <button 
-          @click="addToCart"
-          class="w-full bg-pink-500 text-white py-3 rounded-md hover:bg-pink-600 transition font-medium flex items-center justify-center gap-2"
-        >
-          <span>🛒</span>
-          Add to Cart
-        </button>
       </div>
     </div>
 
@@ -75,7 +53,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const quantity = ref(1)
 const showModal = ref(false)
 
 // Product database - should match ProductGrid.vue
@@ -167,21 +144,11 @@ const formatPrice = (price) => {
   }).format(price)
 }
 
-const increaseQuantity = () => {
-  quantity.value++
-}
-
-const decreaseQuantity = () => {
-  if (quantity.value > 1) {
-    quantity.value--
-  }
-}
-
 const addToCart = () => {
   // In real app, this would add item to cart/wishlist store
   const item = {
     ...product.value,
-    quantity: quantity.value
+    quantity: 1
   }
   
   // Get existing wishlist from localStorage
@@ -191,8 +158,8 @@ const addToCart = () => {
   const existingIndex = wishlist.findIndex(i => i.id === item.id)
   
   if (existingIndex > -1) {
-    // Update quantity
-    wishlist[existingIndex].quantity += quantity.value
+    // Update quantity (+1)
+    wishlist[existingIndex].quantity += 1
   } else {
     // Add new item
     wishlist.push(item)

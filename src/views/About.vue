@@ -11,10 +11,14 @@
 
   <!-- Our Values -->
   <OurValues />
+
+
+  <
 </template>
 
 <script setup>
 import HeroSimple from '@/components/Hero/HeroSimple.vue'
 import OurStory from '@/components/About/OurStory.vue'
 import OurValues from '@/components/About/OurValues.vue'
+
 </script>
