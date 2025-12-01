@@ -12,8 +12,7 @@
   <!-- Our Values -->
   <OurValues />
 
-
-  <
+  
 </template>
 
 <script setup>
