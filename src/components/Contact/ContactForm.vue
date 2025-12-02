@@ -1,45 +1,6 @@
 <template>
   <div class="bg-white py-12">
     <h2 class="text-2xl font-bold mb-6">Send Message</h2>
-    
-    <!-- Single Product Info -->
-    <div 
-      v-if="productInfo && !productsInfo"
-      class="bg-pink-50 border-2 border-pink-200 rounded-lg p-4 mb-6 flex items-center gap-4"
-    >
-      <div class="text-3xl">🛍️</div>
-      <div class="flex-1">
-        <p class="text-sm text-gray-600 mb-1">Produk yang dipilih:</p>
-        <p class="font-bold text-gray-900">{{ productInfo.name }}</p>
-        <p class="text-pink-600 font-bold">Rp. {{ formatPrice(productInfo.price) }}</p>
-      </div>
-    </div>
-    
-    <!-- Multiple Products Info -->
-    <div 
-      v-if="productsInfo && productsInfo.length > 0"
-      class="bg-pink-50 border-2 border-pink-200 rounded-lg p-4 mb-6"
-    >
-      <div class="flex items-center gap-2 mb-3">
-        <div class="text-3xl">🛒</div>
-        <p class="font-bold text-gray-900">{{ productsInfo.length }} Produk Dipilih</p>
-      </div>
-      <div class="space-y-2 mb-3">
-        <div v-for="product in productsInfo" :key="product.id" class="flex justify-between text-sm">
-          <span class="text-gray-700">{{ product.name }} (x{{ product.quantity || 1 }})</span>
-          <span class="font-semibold text-pink-600">Rp. {{ formatPrice(product.price * (product.quantity || 1)) }}</span>
-        </div>
-      </div>
-      <div class="border-t border-pink-300 pt-3 mt-3">
-        <div class="flex justify-between items-center">
-          <span class="font-bold text-gray-900">Total:</span>
-          <span class="text-xl font-bold text-pink-600">
-            Rp. {{ formatPrice(productsInfo.reduce((sum, p) => sum + (p.price * (p.quantity || 1)), 0)) }}
-          </span>
-        </div>
-      </div>
-    </div>
-    
     <form @submit.prevent="handleSubmit" class="space-y-6">
       <div class="grid md:grid-cols-2 gap-6">
         <div>
@@ -125,49 +86,22 @@
 <script setup>
 import { ref } from 'vue'
 
-// Check if single product or multiple products selected
+// Check if product selected from wishlist
 const selectedProduct = localStorage.getItem('selectedProduct')
-const selectedProducts = localStorage.getItem('selectedProducts')
-
 let productInfo = null
-let productsInfo = null
 
-if (selectedProducts) {
-  // Multiple products from checkout
-  productsInfo = JSON.parse(selectedProducts)
-  localStorage.removeItem('selectedProducts')
-} else if (selectedProduct) {
-  // Single product
+if (selectedProduct) {
   productInfo = JSON.parse(selectedProduct)
   localStorage.removeItem('selectedProduct')
 }
 
-
-// Memformat harga ke format Rupiah (1000000 → 1.000.000)
-function formatPrice(price) {
-  if (typeof price !== 'number') {
-    price = Number(price)
-  }
-  return price.toLocaleString('id-ID')
-}
-
-// Generate message based on products
+// Generate message based on product
 let defaultSubject = ''
 let defaultMessage = ''
 
-if (productsInfo && productsInfo.length > 0) {
-  // Multiple products
-  const totalPrice = productsInfo.reduce((sum, p) => sum + (p.price * (p.quantity || 1)), 0)
-  const itemsList = productsInfo.map(p => 
-    `- ${p.name} (x${p.quantity || 1}): Rp. ${formatPrice(p.price * (p.quantity || 1))}`
-  ).join('\n')
-  
-  defaultSubject = `Order: ${productsInfo.length} Produk`
-  defaultMessage = `Hello, saya tertarik untuk memesan produk berikut:\n\n${itemsList}\n\nTotal: Rp. ${formatPrice(totalPrice)}\n\nMohon informasi lebih lanjut mengenai produk-produk tersebut. Terima kasih!`
-} else if (productInfo) {
-  // Single product
+if (productInfo) {
   defaultSubject = `Order: ${productInfo.name}`
-  defaultMessage = `Hello, I'm interested in ${productInfo.name} priced at Rp. ${formatPrice(productInfo.price)}. Please provide more information.`
+  defaultMessage = `Hello, I'm interested in ${productInfo.name} priced at Rp. ${productInfo.price}. Please provide more information.`
 }
 
 const form = ref({
