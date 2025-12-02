@@ -19,8 +19,6 @@
         <WishlistGrid 
           :products="wishlistItems"
           @remove="removeFromWishlist"
-          @add-to-cart="addToCart"
-          @product-click="handleProductClick"
           @contact-us="handleContactUs"
         />
       </div>
@@ -58,22 +56,9 @@ const removeFromWishlist = (productId) => {
   wishlistItems.value = wishlistItems.value.filter(item => item.id !== productId)
   localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value))
   window.dispatchEvent(new Event('wishlist-updated'))
-  console.log('Removed from wishlist:', productId)
-}
-
-const addToCart = (product) => {
-  console.log('Navigating to contact for:', product)
-  sessionStorage.setItem('selectedProduct', JSON.stringify(product))
-  router.push('/contact')
-}
-
-const handleProductClick = (product) => {
-  console.log('Product clicked:', product)
-  router.push(`/product/${product.id}`)
 }
 
 const handleContactUs = (product) => {
-  console.log('Contact us for product:', product)
   localStorage.setItem('selectedProduct', JSON.stringify(product))
   router.push('/contact')
 }

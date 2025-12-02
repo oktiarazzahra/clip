@@ -111,30 +111,33 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-// State untuk menu mobile (buka/tutup)
+// Mobile menu state
 const isMenuOpen = ref(false)
 
-// State untuk jumlah item di keranjang
+// Wishlist counter
 const wishlistCount = ref(0)
 
-// Update jumlah item di keranjang dari localStorage
+// Load wishlist count from localStorage
 const updateWishlistCount = () => {
   const savedWishlist = localStorage.getItem('wishlist')
   if (savedWishlist) {
     const items = JSON.parse(savedWishlist)
+    // Count number of unique items (not total quantity)
     wishlistCount.value = items.length
   } else {
     wishlistCount.value = 0
   }
 }
 
-// Load data saat halaman pertama kali dibuka
+// Initial load
 onMounted(() => {
   updateWishlistCount()
+  
+  // Listen for wishlist updates
   window.addEventListener('wishlist-updated', updateWishlistCount)
 })
 
-// Update juga saat user pindah halaman
+// Also update when route changes (e.g., navigating to wishlist page)
 watch(() => route.path, () => {
   updateWishlistCount()
 })

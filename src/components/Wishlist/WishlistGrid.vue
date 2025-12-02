@@ -5,11 +5,8 @@
         v-for="product in products"
         :key="product.id"
         :product="product"
-        :showRemove="true"
-        :showAddToCart="true"
+        :isInCart="true"
         @remove="handleRemove"
-        @add-to-cart="handleAddToCart"
-        @click="handleProductClick"
         @contact-us="handleContactUs"
       />
     </div>
@@ -26,18 +23,10 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['remove', 'add-to-cart', 'product-click', 'contact-us'])
+const emit = defineEmits(['remove', 'contact-us'])
 
 const handleRemove = (productId) => {
   emit('remove', productId)
-}
-
-const handleAddToCart = (product) => {
-  emit('add-to-cart', product)
-}
-
-const handleProductClick = (product) => {
-  emit('product-click', product)
 }
 
 const handleContactUs = (product) => {

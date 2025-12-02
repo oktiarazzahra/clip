@@ -2,7 +2,7 @@
   <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition relative group">
     <!-- Remove Button -->
     <button 
-      v-if="showRemove"
+      v-if="isInCart"
       @click="handleRemove"
       class="absolute top-1 right-2 z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md hover:bg-red-50 transition"
       >
@@ -11,7 +11,7 @@
       </button>
 
     <!-- Image -->
-    <div class="bg-gray-200 h-48 overflow-hidden flex items-center justify-center" :class="{ 'cursor-pointer': !showRemove }" @click="!showRemove && handleClick()">
+    <div class="bg-gray-200 h-48 overflow-hidden flex items-center justify-center" :class="{ 'cursor-pointer': !isInCart }" @click="!isInCart && handleClick()">
       <img 
         :src="product.image" 
         :alt="product.name"
@@ -22,11 +22,11 @@
     <!-- Info -->
     <div class="p-4">
       <h4 class="font-bold text-black-900 mb-2 text-sm">{{ product.name }}</h4>
-      <p class="text-pink-600 font-bold text-lg mb-3">Rp. {{ formatPrice(product.price) }}</p>
+      <p class="text-pink-600 font-bold text-lg mb-3">Rp. {{ product.price }}</p>
       
       <!-- Contact Us Button (Always show for cart) -->
       <button 
-        v-if="showRemove"
+        v-if="isInCart"
         @click="handleContactUs"
         class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition flex items-center justify-center gap-2 text-sm font-medium"
       >
@@ -43,26 +43,17 @@ const props = defineProps({
     type: Object,
     required: true
   },
-  showRemove: {
-    type: Boolean,
-    default: false
-  },
-  showAddToCart: {
+  isInCart: {
     type: Boolean,
     default: false
   }
 })
 
-const emit = defineEmits(['remove', 'add-to-cart', 'click', 'contact-us'])
+const emit = defineEmits(['remove', 'click', 'contact-us'])
 
 // Menghapus produk dari daftar wishlist/keranjang
 function handleRemove() {
   emit('remove', props.product.id)
-}
-
-// Menambah produk ke keranjang
-function handleAddToCart() {
-  emit('add-to-cart', props.product)
 }
 
 // Menghubungi penjual terkait produk ini
@@ -75,13 +66,4 @@ function handleClick() {
   emit('click', props.product)
 }
 
-// Memformat harga ke format Rupiah (1000000 → 1.000.000)
-function formatPrice(price) {
-  // Pastikan input berupa angka
-  if (typeof price !== 'number') {
-    price = Number(price);
-  }
-  // Ubah ke string dan tambahkan titik setiap 3 digit dari belakang
-  return price.toLocaleString('id-ID');
-}
 </script>

@@ -15,7 +15,7 @@
           <!-- Product Info -->
           <div class="flex flex-col justify-center">
             <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
-            <p class="text-3xl font-bold text-pink-600 mb-6">{{ formatPrice(product.price) }}</p>
+            <p class="text-3xl font-bold text-pink-600 mb-6">Rp. {{ product.price }}</p>
             
             <p class="text-gray-600 mb-8 leading-relaxed">{{ product.description }}</p>
 
@@ -49,20 +49,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import products from '@/data/products.js'
+import products, { getProductById } from '@/data/products.js'
 
 const route = useRoute()
 const showModal = ref(false)
-
-// Data produk sekarang diimpor dari satu sumber (src/data/products.js)
-
 const product = ref({})
 
 onMounted(() => {
-  const productId = parseInt(route.params.id)
-  const foundProduct = products.find(p => p.id === productId)
+  const foundProduct = getProductById(route.params.id)
   if (foundProduct) {
     product.value = foundProduct
   } else {
@@ -71,47 +67,23 @@ onMounted(() => {
   }
 })
 
+// Tidak menggunakan format harga khusus; tampilkan apa adanya dari data
 
-// Memformat harga ke format Rupiah (1000000 → 1.000.000)
-function formatPrice(price) {
-  if (typeof price !== 'number') {
-    price = Number(price)
-  }
-  return price.toLocaleString('id-ID')
-}
-
-// Menambah produk ke keranjang belanja
 const addToCart = () => {
-  const item = {
-    ...product.value,
-    quantity: 1
+  const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]')
+  
+  // Cek apakah produk sudah ada
+  const exists = wishlist.find(i => i.id === product.value.id)
+  
+  if (!exists) {
+    // Tambah produk baru (1 produk hanya bisa dibeli 1x)
+    wishlist.push(product.value)
+    localStorage.setItem('wishlist', JSON.stringify(wishlist))
+    window.dispatchEvent(new Event('wishlist-updated'))
   }
   
-  // Ambil data wishlist dari localStorage
-  const stored = localStorage.getItem('wishlist') || '[]'
-  const wishlist = JSON.parse(stored)
-  
-  // Cek apakah produk sudah ada di wishlist
-  const existingIndex = wishlist.findIndex(i => i.id === item.id)
-  
-  if (existingIndex > -1) {
-    // Jika ada, tambah jumlahnya
-    wishlist[existingIndex].quantity += 1
-  } else {
-    // Jika belum ada, tambahkan produk baru
-    wishlist.push(item)
-  }
-  
-  // Simpan kembali ke localStorage
-  localStorage.setItem('wishlist', JSON.stringify(wishlist))
-  
-  // Trigger event untuk update notifikasi keranjang
-  window.dispatchEvent(new Event('wishlist-updated'))
-  
-  // Tampilkan modal sukses
+  // Tampilkan modal
   showModal.value = true
-  
-  // Tutup modal otomatis setelah 2 detik
   setTimeout(() => {
     showModal.value = false
   }, 2000)
