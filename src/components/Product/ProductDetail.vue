@@ -72,48 +72,46 @@ onMounted(() => {
 })
 
 
-// Fungsi untuk memformat harga ke format rupiah dengan titik setiap 3 digit
+// Memformat harga ke format Rupiah (1000000 → 1.000.000)
 function formatPrice(price) {
-  // Pastikan input berupa angka
   if (typeof price !== 'number') {
-    price = Number(price);
+    price = Number(price)
   }
-  // Ubah ke string dan tambahkan titik setiap 3 digit dari belakang
-  return price.toLocaleString('id-ID');
+  return price.toLocaleString('id-ID')
 }
 
+// Menambah produk ke keranjang belanja
 const addToCart = () => {
-  // In real app, this would add item to cart/wishlist store
   const item = {
     ...product.value,
     quantity: 1
   }
   
-  // Ambil wishlist dari localStorage
+  // Ambil data wishlist dari localStorage
   const stored = localStorage.getItem('wishlist') || '[]'
   const wishlist = JSON.parse(stored)
   
-  // Check if item already exists
+  // Cek apakah produk sudah ada di wishlist
   const existingIndex = wishlist.findIndex(i => i.id === item.id)
   
   if (existingIndex > -1) {
-    // Update quantity (+1)
+    // Jika ada, tambah jumlahnya
     wishlist[existingIndex].quantity += 1
   } else {
-    // Add new item
+    // Jika belum ada, tambahkan produk baru
     wishlist.push(item)
   }
   
-  // Simpan ke localStorage
+  // Simpan kembali ke localStorage
   localStorage.setItem('wishlist', JSON.stringify(wishlist))
   
-  // Emit event to update cart count
+  // Trigger event untuk update notifikasi keranjang
   window.dispatchEvent(new Event('wishlist-updated'))
   
-  // Show modal
+  // Tampilkan modal sukses
   showModal.value = true
   
-  // Auto close after 2 seconds
+  // Tutup modal otomatis setelah 2 detik
   setTimeout(() => {
     showModal.value = false
   }, 2000)

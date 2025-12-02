@@ -55,28 +55,27 @@ const props = defineProps({
 
 const emit = defineEmits(['remove', 'add-to-cart', 'click', 'contact-us'])
 
-// Fungsi untuk menghapus produk dari daftar (misal wishlist/keranjang)
+// Menghapus produk dari daftar wishlist/keranjang
 function handleRemove() {
-  // Hapus produk
   emit('remove', props.product.id)
 }
 
-// Fungsi untuk menambah produk ke keranjang
+// Menambah produk ke keranjang
 function handleAddToCart() {
   emit('add-to-cart', props.product)
 }
 
-// Fungsi untuk menghubungi penjual terkait produk ini
+// Menghubungi penjual terkait produk ini
 function handleContactUs() {
   emit('contact-us', props.product)
 }
 
-// Fungsi saat gambar atau kartu produk diklik
+// Navigasi ke halaman detail produk
 function handleClick() {
   emit('click', props.product)
 }
 
-// Fungsi untuk memformat harga menjadi format rupiah dengan titik setiap 3 digit
+// Memformat harga ke format Rupiah (1000000 → 1.000.000)
 function formatPrice(price) {
   // Pastikan input berupa angka
   if (typeof price !== 'number') {

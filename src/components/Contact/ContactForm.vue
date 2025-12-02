@@ -143,14 +143,12 @@ if (selectedProducts) {
 }
 
 
-// Fungsi untuk memformat harga ke format rupiah dengan titik setiap 3 digit
+// Memformat harga ke format Rupiah (1000000 → 1.000.000)
 function formatPrice(price) {
-  // Pastikan input berupa angka
   if (typeof price !== 'number') {
-    price = Number(price);
+    price = Number(price)
   }
-  // Ubah ke string dan tambahkan titik setiap 3 digit dari belakang
-  return price.toLocaleString('id-ID');
+  return price.toLocaleString('id-ID')
 }
 
 // Generate message based on products
