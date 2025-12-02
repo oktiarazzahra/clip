@@ -48,7 +48,9 @@
           >
             {{ wishlistCount }}
           </span>
+          
         </router-link>
+
 
         <!-- Hamburger Button  -->
         <button 

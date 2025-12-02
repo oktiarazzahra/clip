@@ -126,8 +126,8 @@
 import { ref } from 'vue'
 
 // Check if single product or multiple products selected
-const selectedProduct = sessionStorage.getItem('selectedProduct')
-const selectedProducts = sessionStorage.getItem('selectedProducts')
+const selectedProduct = localStorage.getItem('selectedProduct')
+const selectedProducts = localStorage.getItem('selectedProducts')
 
 let productInfo = null
 let productsInfo = null
@@ -135,15 +135,22 @@ let productsInfo = null
 if (selectedProducts) {
   // Multiple products from checkout
   productsInfo = JSON.parse(selectedProducts)
-  sessionStorage.removeItem('selectedProducts')
+  localStorage.removeItem('selectedProducts')
 } else if (selectedProduct) {
   // Single product
   productInfo = JSON.parse(selectedProduct)
-  sessionStorage.removeItem('selectedProduct')
+  localStorage.removeItem('selectedProduct')
 }
 
-const formatPrice = (price) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+
+// Fungsi untuk memformat harga ke format rupiah dengan titik setiap 3 digit
+function formatPrice(price) {
+  // Pastikan input berupa angka
+  if (typeof price !== 'number') {
+    price = Number(price);
+  }
+  // Ubah ke string dan tambahkan titik setiap 3 digit dari belakang
+  return price.toLocaleString('id-ID');
 }
 
 // Generate message based on products

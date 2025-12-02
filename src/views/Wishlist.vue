@@ -74,7 +74,7 @@ const handleProductClick = (product) => {
 
 const handleContactUs = (product) => {
   console.log('Contact us for product:', product)
-  sessionStorage.setItem('selectedProduct', JSON.stringify(product))
+  localStorage.setItem('selectedProduct', JSON.stringify(product))
   router.push('/contact')
 }
 </script>

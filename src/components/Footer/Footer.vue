@@ -10,9 +10,9 @@
           <h3 class="text-lg font-bold text-gray-900 mb-2">Stay Connected</h3>
           <p class="text-gray-600 mb-4">Get updates & offers</p>
           <div class="flex justify-end gap-3">
-            <a href="#" class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition text-white text-lg">📷</a>
-            <a href="#" class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition text-white text-lg">🎵</a>
-            <a href="#" class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition text-white text-lg">f</a>
+            <span class="px-4 py-2 bg-pink-500 rounded-full text-white text-sm font-medium cursor-default">Elegant</span>
+            <span class="px-4 py-2 bg-pink-500 rounded-full text-white text-sm font-medium cursor-default">Chic</span>
+            <span class="px-4 py-2 bg-pink-500 rounded-full text-white text-sm font-medium cursor-default">Beautiful</span>
           </div>
         </div>
       </div>
