@@ -33,6 +33,13 @@
         >
           Contact
         </router-link>
+        <router-link 
+          to="/saya" 
+          class="hover:text-pink-600 transition font-medium"
+          :class="{ 'text-pink-600 font-bold': isActive('/saya') }"
+        >
+        COTS
+        </router-link>
       </div>
 
       <div class="flex items-center space-x-4">

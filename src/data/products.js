@@ -59,6 +59,7 @@ const products = [
     image: import.meta.env.BASE_URL + 'images/shell.jpg',
     description: 'A cute shell-shaped hair claw with a subtle glow effect. Perfect for beach vibes.'
   }
+  
 ]
 
 export default products
