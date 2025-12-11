@@ -67,16 +67,13 @@ onMounted(() => {
   }
 })
 
-// Tidak menggunakan format harga khusus; tampilkan apa adanya dari data
-
 const addToCart = () => {
   const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]')
   
-  // Cek apakah produk sudah ada
+
   const exists = wishlist.find(i => i.id === product.value.id)
   
   if (!exists) {
-    // Tambah produk baru (1 produk hanya bisa dibeli 1x)
     wishlist.push(product.value)
     localStorage.setItem('wishlist', JSON.stringify(wishlist))
     window.dispatchEvent(new Event('wishlist-updated'))

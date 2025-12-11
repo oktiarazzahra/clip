@@ -13,7 +13,11 @@
             <span class="px-4 py-2 bg-pink-500 rounded-full text-white text-sm font-medium cursor-default">Elegant</span>
             <span class="px-4 py-2 bg-pink-500 rounded-full text-white text-sm font-medium cursor-default">Chic</span>
             <span class="px-4 py-2 bg-pink-500 rounded-full text-white text-sm font-medium cursor-default">Beautiful</span>
-          </div>
+          </div>  "
+          "
+            "
+            "
+            """"
         </div>
       </div>
       <div class="border-t my-8"></div>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-white shadow-sm sticky top-0 z-50 border-b-2 border-blue-400">
+  <nav class="bg-white shadow-sm sticky top-0 z-50 border-b-2 border-pink-400">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <router-link to="/" class="text-2xl font-bold text-pink-600 italic">ClipChic</router-link>
       
